@@ -2,7 +2,7 @@ import cv2 as cv
 import argparse
 
 def parser():
-    parser = argparse.ArgumentParser(description='OpenCV Reader')
+    parser = argparse.ArgumentParser(description='Face Detection')
     parser.add_argument("--image", type=str, help='Path to the image')
     parser.add_argument("--video", type=str, help='Path to the video')
 
@@ -28,7 +28,6 @@ def detect_face(image, gray_image, show=True):
 
 if __name__=='__main__':
     args = parser()
-    # image_file = 'assets/images/lady.jpg'
     image_file = args.image
     img = cv.imread(image_file)
     gray = convert_gray(img)
