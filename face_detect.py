@@ -4,7 +4,6 @@ import argparse
 def parser():
     parser = argparse.ArgumentParser(description='Face Detection')
     parser.add_argument("--image", type=str, help='Path to the image')
-    parser.add_argument("--video", type=str, help='Path to the video')
     parser.add_argument("--neighbors", type=int, help='minNeighbors factor')
 
     return parser.parse_args()
