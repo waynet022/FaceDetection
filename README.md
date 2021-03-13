@@ -4,12 +4,12 @@
 python3
 
 ### Setup
-[optional] create a python virtual environment
+- [optional] create a python virtual environment
 
 
 `python -m venv env`
 
-Install opencv for python
+- Install opencv for python
 
 `pip install opencv_python`
 
