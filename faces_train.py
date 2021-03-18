@@ -47,5 +47,15 @@ if __name__=='__main__':
     people = read_names(name_file)
     
     features, labels = create_train(people)
-    print(f'length of the features = {len(features)}')
-    print(f'length of the labels = {len(labels)}')    
+    print('Training done')
+    features=np.array(features, dtype='object')
+    labels=np.array(labels)
+
+    face_recognizer = cv.face.LBPHFaceRecognizer_create()
+
+    face_recognizer.train(features, labels)
+
+    face_recognizer.save('face_trained.yml')
+
+    np.save('features.npy', features)
+    np.save('labels.npy', labels)
