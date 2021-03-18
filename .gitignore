@@ -130,3 +130,7 @@ dmypy.json
 
 # Image folder
 pics/*
+
+# Saved files
+*yml
+*npy
