@@ -1,6 +1,10 @@
-import cv2 as cv2
+import cv2 as cv
 import os
 import numpy as np
+
+DIR = 'images/faces/train'
+hc_file = 'haar_face.xml'
+haar_cascade = cv.CascadeClassifier(hc_file)
 
 def read_names(file):
     name_list = []
@@ -16,9 +20,32 @@ def face_images(train_path):
         folders.append(folder)
     return folders
 
+def create_train(people):
+    features = []
+    labels = []
+        
+    for person in people:
+        path = os.path.join(DIR, person)
+        label = people.index(person)
+
+        for img in os.listdir(path):
+            img_path = os.path.join(path, img)
+
+            img_array=cv.imread(img_path)
+            gray = cv.cvtColor(img_array, cv.COLOR_BGR2GRAY)
+
+            faces_rect = haar_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4)
+
+            for (x,y,w,h) in faces_rect:
+                faces_roi=gray[y:y+h, x:x+w]
+                features.append(faces_roi)
+                labels.append(label)
+    return features, labels
+
 if __name__=='__main__':
     name_file = 'people.names'
-    face_location = 'images/faces/train'
-
     people = read_names(name_file)
-    face_folders=face_images(face_location)
+    
+    features, labels = create_train(people)
+    print(f'length of the features = {len(features)}')
+    print(f'length of the labels = {len(labels)}')    
