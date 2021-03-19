@@ -134,3 +134,6 @@ pics/*
 # Saved files
 *yml
 *npy
+
+# vscode
+.vscode
