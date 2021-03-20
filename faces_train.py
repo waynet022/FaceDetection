@@ -2,6 +2,7 @@ import cv2 as cv
 import os
 import numpy as np
 import argparse
+from name_reader import read_names
 
 hc_file = 'haar_face.xml'
 haar_cascade = cv.CascadeClassifier(hc_file)
@@ -12,14 +13,6 @@ def parser():
     parser.add_argument('--names', type=str, required=True, help='Path to names file')
 
     return parser.parse_args()
-
-def read_names(file):
-    name_list = []
-    with open(file) as names:
-        list = names.read().splitlines()
-        for name in list:
-            name_list.append(name)
-    return name_list
 
 def face_images(train_path):
     folders=[]

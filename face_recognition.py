@@ -1,8 +1,10 @@
 import numpy as np
 import cv2 as cv
+from name_reader import read_names
 
 def run():
-    people = ['Ben Afflek', 'Elton John', 'Jerry Seinfield', 'Madonna', 'Mindy Kaling']
+    names_file = 'people.names'
+    people = read_names(names_file)
 
     haar_cascade = cv.CascadeClassifier('haar_face.xml')
 
