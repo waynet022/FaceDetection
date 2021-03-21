@@ -15,16 +15,9 @@ def parser():
 
     return parser.parse_args()
 
-def face_images(train_path):
-    folders=[]
-    for folder in os.listdir(train_path):
-        folders.append(folder)
-    return folders
-
 def create_train(people, folder):
     features = []
     labels = []
-    
 
     for person in people:
         path = os.path.join(folder, person)
