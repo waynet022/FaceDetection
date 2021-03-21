@@ -3,6 +3,7 @@ import os
 import numpy as np
 import argparse
 from name_reader import read_names
+from alive_progress import alive_bar
 
 hc_file = 'haar_face.xml'
 haar_cascade = cv.CascadeClassifier(hc_file)
@@ -23,23 +24,28 @@ def face_images(train_path):
 def create_train(people, folder):
     features = []
     labels = []
-        
+    
+
     for person in people:
         path = os.path.join(folder, person)
         label = people.index(person)
 
-        for img in os.listdir(path):
-            img_path = os.path.join(path, img)
+        print(f'Processing {person}')
+        with alive_bar(len(os.listdir(path))) as bar: 
+            for img in os.listdir(path):
+                img_path = os.path.join(path, img)
 
-            img_array=cv.imread(img_path)
-            gray = cv.cvtColor(img_array, cv.COLOR_BGR2GRAY)
+                img_array=cv.imread(img_path)
+                gray = cv.cvtColor(img_array, cv.COLOR_BGR2GRAY)
 
-            faces_rect = haar_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4)
+                faces_rect = haar_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4)
 
-            for (x,y,w,h) in faces_rect:
-                faces_roi=gray[y:y+h, x:x+w]
-                features.append(faces_roi)
-                labels.append(label)
+                for (x,y,w,h) in faces_rect:
+                    faces_roi=gray[y:y+h, x:x+w]
+                    features.append(faces_roi)
+                    labels.append(label)
+                bar()
+
     return features, labels
 
 if __name__=='__main__':
