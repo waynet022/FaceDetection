@@ -38,6 +38,7 @@ def create_train(people, folder):
                     features.append(faces_roi)
                     labels.append(label)
                 bar()
+        print(f'Processing {person} complete\n')
 
     return features, labels
 
