@@ -1,20 +1,31 @@
 import numpy as np
 import cv2 as cv
 from name_reader import read_names
+import argparse
+
+
+def parser():
+    parser = argparse.ArgumentParser(description='Face Training')
+    parser.add_argument('--image', type=str, required=True, help='Path to image')
+    parser.add_argument('--names', type=str, required=True, help='Path to names file')
+    parser.add_argument('--yml', type=str, required=True, help='Path to yml file')
+
+    return parser.parse_args()
 
 def run():
-    names_file = 'people.names'
+    args = parser()
+    names_file = args.names
     people = read_names(names_file)
 
     haar_cascade = cv.CascadeClassifier('haar_face.xml')
 
-    features=np.load('features.npy', allow_pickle=True)
-    labels=np.load('labels.npy')
+    # features=np.load('features.npy', allow_pickle=True)
+    # labels=np.load('labels.npy')
 
     face_recognizer = cv.face.LBPHFaceRecognizer_create()
-    face_recognizer.read('face_trained.yml')
+    face_recognizer.read(args.yml)
 
-    img = cv.imread('images/faces/val/ben_afflek/2.jpg')
+    img = cv.imread(args.image)
     cv.imshow('Person', img)
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
